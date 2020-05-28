@@ -31,15 +31,15 @@
     Subject <- rbind(subject_train, subject_test)
     Merged_Data <- cbind(Subject, Y, X)
     
-    rm("xtrain", "xtest", "Subject_train", "Subject_test")
-    
-    # Extracts only the measurements on the mean and standard deviation for each measurement
-    filteredcolumns <- grepl("Subject|Activity|std|mean", colnames(Dataset))
-    Dataset <- Dataset[,filteredcolumns]
+    rm("xtrain", "xtest", "subject_train", "subject_test", "ytest", "ytrain", "X", "Y", "Subject")
     
     # Uses descriptive activity names to name the activities in the data set
     Dataset <- merge(activity_labels, Merged_Data, by = "Code")
     Dataset$Code <- NULL
+    
+    # Extracts only the measurements on the mean and standard deviation for each measurement
+    filteredcolumns <- grepl("Subject|Activity|std|mean", colnames(Dataset))
+    Dataset <- Dataset[,filteredcolumns]
     
     # Appropriately labels the data set with descriptive variable names
     DatasetCols <- colnames(Dataset)
@@ -66,4 +66,3 @@
     # Output to file
     write.table(DatasetMeans, "tidy_data.txt", row.names = FALSE, 
                 quote = FALSE)
-        
